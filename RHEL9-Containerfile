@@ -1,0 +1,61 @@
+# Use RHEL9 UBI as the base image
+FROM registry.access.redhat.com/ubi9/ubi:9.7
+
+ARG USERNAME=flash
+ARG USER_UID=1000
+ARG USER_GID=1000
+
+# Optional tool installation flags
+ARG INSTALL_DEV_TOOLS=false
+ARG INSTALL_BUILD_TOOLS=false
+ARG INSTALL_NET_TOOLS=false
+
+USER root
+WORKDIR /root
+
+# Install base packages
+RUN dnf install -y less python3.12 sudo vim && \
+   dnf clean all && \
+   rm -rf /var/cache/dnf
+
+# Install development tools (git, curl, wget, tar, unzip, zip)
+RUN if [ "$INSTALL_DEV_TOOLS" = "true" ]; then \
+   dnf install -y git curl wget tar unzip zip && \
+   dnf clean all && \
+   rm -rf /var/cache/dnf; \
+   fi
+
+# Install build tools (gcc, make, development libraries)
+RUN if [ "$INSTALL_BUILD_TOOLS" = "true" ]; then \
+   dnf install -y gcc gcc-c++ make autoconf automake pkgconfig && \
+   dnf clean all && \
+   rm -rf /var/cache/dnf; \
+   fi
+
+# Install network tools (jq, bind-utils, iproute, net-tools)
+RUN if [ "$INSTALL_NET_TOOLS" = "true" ]; then \
+   dnf install -y jq bind-utils iproute net-tools && \
+   dnf clean all && \
+   rm -rf /var/cache/dnf; \
+   fi
+
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh && \
+    mv /root/.local/bin/uv* /usr/local/bin/
+
+# Create a new user with matching UID/GID for file permissions
+RUN groupadd -g $USER_GID $USERNAME 2>/dev/null || groupmod -n $USERNAME $(getent group $USER_GID | cut -d: -f1) && \
+    useradd -u $USER_UID -g $USER_GID -m $USERNAME && \
+    echo "$USERNAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Create data directory with proper ownership
+RUN mkdir -p /home/$USERNAME/data && \
+    chown -R $USERNAME:$USERNAME /home/$USERNAME/data
+
+# Switch to the new user
+USER $USERNAME
+
+# Set the working directory to the user's home
+WORKDIR /home/$USERNAME
+
+# Set the default shell to /bin/sh
+CMD ["/bin/bash"]
