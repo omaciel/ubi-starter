@@ -35,27 +35,27 @@ This starter kit uses Universal Base Images (UBI) from Red Hat, which are:
 - Available without a Red Hat subscription
 - Based on RHEL packages
 
-The Containerfiles use specific UBI image versions:
+The Containerfiles use the floating `:latest` tag for each major UBI release, so every rebuild automatically picks up the newest minor without needing to bump the Containerfile:
 
-- `registry.access.redhat.com/ubi8/ubi:8.10` (RHEL 8)
-- `registry.access.redhat.com/ubi9/ubi:9.7` (RHEL 9)
-- `registry.access.redhat.com/ubi10/ubi:10.1` (RHEL 10)
+- `registry.access.redhat.com/ubi8/ubi:latest` (latest RHEL 8.x)
+- `registry.access.redhat.com/ubi9/ubi:latest` (latest RHEL 9.x)
+- `registry.access.redhat.com/ubi10/ubi:latest` (latest RHEL 10.x)
 
-These images will be pulled automatically during the build process. However, if you want to pre-pull them or use different versions, you can do so:
+These images are pulled automatically during the build. To pre-pull them (e.g. to warm a cache):
 
 ```bash
-# Using Docker - images will be pulled automatically during build
-docker pull registry.access.redhat.com/ubi8/ubi:8.10
-docker pull registry.access.redhat.com/ubi9/ubi:9.7
-docker pull registry.access.redhat.com/ubi10/ubi:10.1
+# Using Docker
+docker pull registry.access.redhat.com/ubi8/ubi:latest
+docker pull registry.access.redhat.com/ubi9/ubi:latest
+docker pull registry.access.redhat.com/ubi10/ubi:latest
 
-# Or using Podman - images will be pulled automatically during build
-podman pull registry.access.redhat.com/ubi8/ubi:8.10
-podman pull registry.access.redhat.com/ubi9/ubi:9.7
-podman pull registry.access.redhat.com/ubi10/ubi:10.1
+# Or using Podman
+podman pull registry.access.redhat.com/ubi8/ubi:latest
+podman pull registry.access.redhat.com/ubi9/ubi:latest
+podman pull registry.access.redhat.com/ubi10/ubi:latest
 ```
 
-**Note**: The images are pulled directly from Red Hat's registry during build, so no manual pulling or tagging is required unless you want to cache them beforehand.
+**Need a reproducible build?** Replace `:latest` with a specific minor (e.g. `ubi9/ubi:9.8`) in the relevant Containerfile. Floating tags trade reproducibility for zero-maintenance upgrades.
 
 ## Quick Start
 

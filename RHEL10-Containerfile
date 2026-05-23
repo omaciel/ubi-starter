@@ -1,5 +1,5 @@
-# Use RHEL10 UBI as the base image
-FROM registry.access.redhat.com/ubi10/ubi:10.1
+# Use RHEL10 UBI as the base image (floats to the latest RHEL 10.x minor)
+FROM registry.access.redhat.com/ubi10/ubi:latest
 
 ARG USERNAME=flash
 ARG USER_UID=1000
