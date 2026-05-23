@@ -1,0 +1,5 @@
+ignored:
+  # DL3041: Pinning dnf package versions provides little value here — the UBI
+  # base image tag (e.g. ubi9/ubi:9.7) is the pinned dependency, and pinned
+  # package versions would constantly drift against the chosen base image.
+  - DL3041
