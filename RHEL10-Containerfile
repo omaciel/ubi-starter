@@ -21,8 +21,9 @@ RUN dnf install -y less python3.12 sudo vim && \
    rm -rf /var/cache/dnf
 
 # Install development tools (git, curl, wget, tar, unzip, zip)
+# --allowerasing lets dnf swap curl-minimal (preinstalled on RHEL 9+ UBI) for full curl
 RUN if [ "$INSTALL_DEV_TOOLS" = "true" ]; then \
-   dnf install -y git curl wget tar unzip zip && \
+   dnf install -y --allowerasing git curl wget tar unzip zip && \
    dnf clean all && \
    rm -rf /var/cache/dnf; \
    fi
