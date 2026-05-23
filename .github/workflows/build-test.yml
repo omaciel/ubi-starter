@@ -1,0 +1,65 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint Containerfiles
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [8, 9, 10]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run hadolint on RHEL${{ matrix.version }}-Containerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: RHEL${{ matrix.version }}-Containerfile
+          failure-threshold: warning
+
+  build:
+    name: Build, smoke-test, scan (RHEL ${{ matrix.version }})
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [8, 9, 10]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build RHEL${{ matrix.version }} image (with all optional tools)
+        run: |
+          make build-rhel${{ matrix.version }} \
+            INSTALL_DEV_TOOLS=true \
+            INSTALL_BUILD_TOOLS=true \
+            INSTALL_NET_TOOLS=true
+
+      - name: Smoke test — user, python, uv, data dir
+        run: |
+          docker run --rm localhost/ubi${{ matrix.version }}/ubi:latest bash -c '
+            set -euxo pipefail
+            id
+            test "$(id -un)" = "flash"
+            python3.12 --version
+            uv --version
+            test -d /home/flash/data
+            git --version
+            gcc --version
+            jq --version
+          '
+
+      - name: Trivy vulnerability scan (CRITICAL/HIGH)
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: localhost/ubi${{ matrix.version }}/ubi:latest
+          severity: CRITICAL,HIGH
+          exit-code: '0'
+          format: table
+          ignore-unfixed: true

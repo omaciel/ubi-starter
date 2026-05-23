@@ -1,5 +1,8 @@
 # ubi-starter
 
+[![Build & Test](https://github.com/omaciel/ubi-starter/actions/workflows/build-test.yml/badge.svg)](https://github.com/omaciel/ubi-starter/actions/workflows/build-test.yml)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
 A starter kit for testing applications inside Red Hat Universal Base Image (UBI) containers, with proper user permissions and volume mounting — no Red Hat subscription required.
 
 ## Overview
