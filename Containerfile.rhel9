@@ -56,6 +56,19 @@ RUN groupadd -g "$USER_GID" "$USERNAME" 2>/dev/null || groupmod -n "$USERNAME" "
 RUN mkdir -p /home/$USERNAME/data && \
     chown -R $USERNAME:$USERNAME /home/$USERNAME/data
 
+# Add a shell-startup banner showing the repo name + OS/python/uv versions.
+# Runs once per interactive shell (guarded by $UBI_STARTER_MOTD_SHOWN).
+RUN printf '%s\n' \
+    '' \
+    '# ubi-starter MOTD' \
+    'if [ -z "$UBI_STARTER_MOTD_SHOWN" ]; then' \
+    '    export UBI_STARTER_MOTD_SHOWN=1' \
+    '    . /etc/os-release 2>/dev/null' \
+    '    printf "\n\033[1;36mubi-starter\033[0m — %s\n" "${PRETTY_NAME:-RHEL UBI}"' \
+    '    printf "              %s · %s\n\n" "$(python3 --version 2>&1)" "$(uv --version 2>&1)"' \
+    'fi' \
+    >> "/home/$USERNAME/.bashrc"
+
 # Switch to the new user
 USER $USERNAME
 
