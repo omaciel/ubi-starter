@@ -1,7 +1,10 @@
 # Use RHEL8 UBI as the base image — pinned by digest for reproducibility.
-# Dependabot opens a PR when a new minor ships or the same minor is rebuilt
-# (e.g. for CVE fixes). See .github/dependabot.yml.
-FROM registry.access.redhat.com/ubi8/ubi:8.10@sha256:1551c9a922dbb31c5688380fd955ef57f0f00b395bacb36856bc386eba82897b
+# Uses :latest (not :8.10) because RHEL 8.10 is the terminal RHEL 8 minor
+# and Red Hat publishes build-tagged variants like 8.10-1304.1751400627 for
+# specific rebuilds. Dependabot's docker file-updater chokes on those tag
+# formats when pinning a digest. Tracking :latest@digest sidesteps the bug
+# while still getting CVE-rebuild PRs (digest changes when Red Hat respins).
+FROM registry.access.redhat.com/ubi8/ubi:latest@sha256:1551c9a922dbb31c5688380fd955ef57f0f00b395bacb36856bc386eba82897b
 
 ARG USERNAME=flash
 ARG USER_UID=1000

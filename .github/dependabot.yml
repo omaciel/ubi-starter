@@ -21,19 +21,12 @@ updates:
       ubi-base-images:
         patterns:
           - "registry.access.redhat.com/ubi*"
-    # RHEL 8.10 is the final RHEL 8 minor — Red Hat will not ship 8.11+.
-    # Red Hat does publish build-tagged variants of 8.10 (e.g.
-    # 8.10-1304.1751400627) for specific builds. Dependabot interprets
-    # these as version bumps, but its file-updater rejects the resulting
-    # tag-format change with 'dependency_file_not_supported'. We ignore
-    # all semver-classified updates for ubi8 to suppress the noise.
-    # Digest-only updates (CVE rebuilds of :8.10) still come through.
-    ignore:
-      - dependency-name: "registry.access.redhat.com/ubi8/ubi"
-        update-types:
-          - "version-update:semver-major"
-          - "version-update:semver-minor"
-          - "version-update:semver-patch"
+    # Note on ubi8: Containerfile.rhel8 pins :latest@digest rather than
+    # :8.10@digest. RHEL 8.10 is the terminal RHEL 8 release, and Red Hat
+    # publishes build-tagged variants (e.g. 8.10-1304.1751400627) that
+    # Dependabot's docker file-updater fails to write back. Tracking the
+    # :latest tag confines updates to digest-only changes, which sidesteps
+    # the tag-format bug while still flagging CVE-driven respins.
 
   # GitHub Actions used in .github/workflows. Catches deprecations (e.g.
   # actions/checkout moving to Node.js 24) without manual tracking.

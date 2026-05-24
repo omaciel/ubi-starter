@@ -35,24 +35,26 @@ This starter kit uses Universal Base Images (UBI) from Red Hat, which are:
 - Available without a Red Hat subscription
 - Based on RHEL packages
 
-The Containerfiles pin each UBI image to a specific minor **and** content digest, so every build of a given commit produces a bit-for-bit identical base layer:
+The Containerfiles pin each UBI image by **content digest**, so every build of a given commit produces a bit-for-bit identical base layer:
 
-- `registry.access.redhat.com/ubi8/ubi:8.10@sha256:…` (currently RHEL 8.10)
+- `registry.access.redhat.com/ubi8/ubi:latest@sha256:…` (currently RHEL 8.10 — the final RHEL 8 minor)
 - `registry.access.redhat.com/ubi9/ubi:9.8@sha256:…` (currently RHEL 9.8)
 - `registry.access.redhat.com/ubi10/ubi:10.2@sha256:…` (currently RHEL 10.2)
 
-[Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates) watches these references and opens a PR whenever a new minor ships **or** the same minor is rebuilt (for example, when Red Hat releases an updated UBI image to address CVEs). Merging the PR is the only manual step — CI rebuilds and re-scans automatically. See [`.github/dependabot.yml`](.github/dependabot.yml).
+[Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates) watches these references and opens a PR whenever the digest changes — i.e. when a new minor ships **or** the same minor is rebuilt (e.g. for CVE fixes). Merging the PR is the only manual step — CI rebuilds and re-scans automatically. See [`.github/dependabot.yml`](.github/dependabot.yml).
+
+> **Why `:latest` for ubi8 but pinned minors for ubi9/ubi10?** Red Hat publishes build-tagged variants of `:8.10` (e.g. `8.10-1304.1751400627`) that Dependabot's docker file-updater can't write back when combined with a digest pin. Since RHEL 8.10 is the terminal RHEL 8 minor, `:latest` is semantically equivalent to `:8.10` and avoids the bug. Reproducibility is preserved by the digest pin.
 
 These images are pulled automatically during the build. To pre-pull them (e.g. to warm a cache):
 
 ```bash
 # Using Docker
-docker pull registry.access.redhat.com/ubi8/ubi:8.10
+docker pull registry.access.redhat.com/ubi8/ubi:latest
 docker pull registry.access.redhat.com/ubi9/ubi:9.8
 docker pull registry.access.redhat.com/ubi10/ubi:10.2
 
 # Or using Podman
-podman pull registry.access.redhat.com/ubi8/ubi:8.10
+podman pull registry.access.redhat.com/ubi8/ubi:latest
 podman pull registry.access.redhat.com/ubi9/ubi:9.8
 podman pull registry.access.redhat.com/ubi10/ubi:10.2
 ```
