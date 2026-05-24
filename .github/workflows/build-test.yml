@@ -16,7 +16,7 @@ jobs:
       matrix:
         version: [8, 9, 10]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Run hadolint on Containerfile.rhel${{ matrix.version }}
         uses: hadolint/hadolint-action@v3.1.0
         with:
@@ -32,7 +32,7 @@ jobs:
       matrix:
         version: [8, 9, 10]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build RHEL${{ matrix.version }} image (with all optional tools)
         run: |
