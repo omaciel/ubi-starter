@@ -2,7 +2,10 @@ version: 2
 updates:
   # UBI base images in the Containerfiles. Pinned by digest, so Dependabot
   # opens a PR both when a new minor ships and when an existing minor is
-  # rebuilt (e.g. for CVE fixes).
+  # rebuilt (e.g. for CVE fixes). Containerfiles must start with the literal
+  # "Containerfile" prefix for Dependabot's docker file-updater to write to
+  # them — that's why we use Containerfile.rhel{8,9,10} rather than the
+  # original RHEL{8,9,10}-Containerfile naming.
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -11,6 +14,7 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "chore(deps)"
+      include: "scope"
     labels:
       - "dependencies"
     groups:
