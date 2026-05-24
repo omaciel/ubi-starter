@@ -1,5 +1,15 @@
 # ubi-starter
 
+```
+  _   _ ____ ___              .--.
+ | | | | __ )_ _|            |o_o |
+ | | | |  _ \| |             |:_/ |
+ | |_| | |_) | |            //   \ \
+  \___/|____/___|          (|     | )
+                          /'\_   _/`\
+  STARTER KIT             \___)=(___/
+```
+
 [![Build & Test](https://github.com/omaciel/ubi-starter/actions/workflows/build-test.yml/badge.svg)](https://github.com/omaciel/ubi-starter/actions/workflows/build-test.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
