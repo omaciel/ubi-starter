@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Run hadolint on Containerfile.rhel${{ matrix.version }}
-        uses: hadolint/hadolint-action@v3.1.0
+        uses: hadolint/hadolint-action@v3.3.0
         with:
           dockerfile: Containerfile.rhel${{ matrix.version }}
           failure-threshold: warning
