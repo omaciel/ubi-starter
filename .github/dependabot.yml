@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # UBI base images in the Containerfiles. Pinned by digest, so Dependabot
+  # opens a PR both when a new minor ships and when an existing minor is
+  # rebuilt (e.g. for CVE fixes).
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"
+    groups:
+      ubi-base-images:
+        patterns:
+          - "registry.access.redhat.com/ubi*"
+
+  # GitHub Actions used in .github/workflows. Catches deprecations (e.g.
+  # actions/checkout moving to Node.js 24) without manual tracking.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    labels:
+      - "dependencies"

@@ -1,5 +1,7 @@
-# Use RHEL8 UBI as the base image (floats to the latest RHEL 8.x minor)
-FROM registry.access.redhat.com/ubi8/ubi:latest
+# Use RHEL8 UBI as the base image — pinned by digest for reproducibility.
+# Dependabot opens a PR when a new minor ships or the same minor is rebuilt
+# (e.g. for CVE fixes). See .github/dependabot.yml.
+FROM registry.access.redhat.com/ubi8/ubi:8.10@sha256:1551c9a922dbb31c5688380fd955ef57f0f00b395bacb36856bc386eba82897b
 
 ARG USERNAME=flash
 ARG USER_UID=1000

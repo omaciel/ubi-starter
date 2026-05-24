@@ -3,7 +3,3 @@ ignored:
   # base image is the upstream of truth, and pinned package versions would
   # constantly drift against whichever minor of UBI is current.
   - DL3041
-  # DL3007: We intentionally float on the per-major UBI :latest tag so rebuilds
-  # auto-track the newest RHEL minor (8.10, 9.8, 10.2, ...). Users who need
-  # reproducible builds can substitute a pinned tag (e.g. ubi9/ubi:9.8).
-  - DL3007
