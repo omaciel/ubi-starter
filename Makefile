@@ -53,7 +53,7 @@ build-rhel8:
 	@echo "Building RHEL 8 container image..."
 	@echo "Using UID=$(USER_UID) and GID=$(USER_GID)"
 	@echo "Optional tools: DEV=$(INSTALL_DEV_TOOLS), BUILD=$(INSTALL_BUILD_TOOLS), NET=$(INSTALL_NET_TOOLS)"
-	$(CONTAINER_RUNTIME) build -f RHEL8-Containerfile \
+	$(CONTAINER_RUNTIME) build -f Containerfile.rhel8 \
 		--build-arg USERNAME=$(USERNAME) \
 		--build-arg USER_UID=$(USER_UID) \
 		--build-arg USER_GID=$(USER_GID) \
@@ -80,7 +80,7 @@ build-rhel9:
 	@echo "Building RHEL 9 container image..."
 	@echo "Using UID=$(USER_UID) and GID=$(USER_GID)"
 	@echo "Optional tools: DEV=$(INSTALL_DEV_TOOLS), BUILD=$(INSTALL_BUILD_TOOLS), NET=$(INSTALL_NET_TOOLS)"
-	$(CONTAINER_RUNTIME) build -f RHEL9-Containerfile \
+	$(CONTAINER_RUNTIME) build -f Containerfile.rhel9 \
 		--build-arg USERNAME=$(USERNAME) \
 		--build-arg USER_UID=$(USER_UID) \
 		--build-arg USER_GID=$(USER_GID) \
@@ -107,7 +107,7 @@ build-rhel10:
 	@echo "Building RHEL 10 container image..."
 	@echo "Using UID=$(USER_UID) and GID=$(USER_GID)"
 	@echo "Optional tools: DEV=$(INSTALL_DEV_TOOLS), BUILD=$(INSTALL_BUILD_TOOLS), NET=$(INSTALL_NET_TOOLS)"
-	$(CONTAINER_RUNTIME) build -f RHEL10-Containerfile \
+	$(CONTAINER_RUNTIME) build -f Containerfile.rhel10 \
 		--build-arg USERNAME=$(USERNAME) \
 		--build-arg USER_UID=$(USER_UID) \
 		--build-arg USER_GID=$(USER_GID) \

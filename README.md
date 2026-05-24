@@ -259,9 +259,9 @@ make run-rhel9 CONTAINER_RUNTIME=podman
 ```bash
 .
 ├── Makefile                # Build, run, and clean targets
-├── RHEL8-Containerfile     # RHEL 8 container definition
-├── RHEL9-Containerfile     # RHEL 9 container definition
-├── RHEL10-Containerfile    # RHEL 10 container definition
+├── Containerfile.rhel8    # RHEL 8 container definition
+├── Containerfile.rhel9    # RHEL 9 container definition
+├── Containerfile.rhel10   # RHEL 10 container definition
 └── README.md               # This file
 ```
 
@@ -381,7 +381,7 @@ See the "Installing Optional Developer Tools" section for available tool groups.
 
 **Option 2: Manually edit Containerfiles** (for custom packages):
 
-Edit the respective Containerfile (e.g., `RHEL9-Containerfile`) to add packages:
+Edit the respective Containerfile (e.g., `Containerfile.rhel9`) to add packages:
 
 ```dockerfile
 RUN dnf install -y \
