@@ -58,6 +58,9 @@ RUN mkdir -p /home/$USERNAME/data && \
 
 # Add a shell-startup banner showing the repo name + OS/python/uv versions.
 # Runs once per interactive shell (guarded by $UBI_STARTER_MOTD_SHOWN).
+# SC2016 is intentional: these lines are shell source written into .bashrc, so
+# the variables must expand at shell startup, not at image build time.
+# hadolint ignore=SC2016
 RUN printf '%s\n' \
     '' \
     '# ubi-starter MOTD' \
