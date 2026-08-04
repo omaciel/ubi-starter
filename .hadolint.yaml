@@ -3,3 +3,8 @@ ignored:
   # base image is the upstream of truth, and pinned package versions would
   # constantly drift against whichever minor of UBI is current.
   - DL3041
+
+  # DL3064: The rule flags any ARG/ENV whose name looks credential-ish. It fires
+  # on `ARG USERNAME=...`, which is the unprivileged container account name, not
+  # a secret. No credentials are baked into these images.
+  - DL3064
