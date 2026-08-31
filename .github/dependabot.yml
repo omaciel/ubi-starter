@@ -19,8 +19,12 @@ updates:
       - "dependencies"
     groups:
       ubi-base-images:
+        # Dependabot names docker dependencies without the registry host, so a
+        # "registry.access.redhat.com/*" pattern never matches and every image
+        # lands in its own PR. The names it actually uses are ubi8/ubi,
+        # ubi9/ubi and ubi10/ubi.
         patterns:
-          - "registry.access.redhat.com/ubi*"
+          - "ubi*/ubi"
     # Note on ubi8: Containerfile.rhel8 pins :latest@digest rather than
     # :8.10@digest. RHEL 8.10 is the terminal RHEL 8 release, and Red Hat
     # publishes build-tagged variants (e.g. 8.10-1304.1751400627) that

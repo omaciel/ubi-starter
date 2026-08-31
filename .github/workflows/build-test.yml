@@ -56,7 +56,10 @@ jobs:
           '
 
       - name: Trivy vulnerability scan (CRITICAL/HIGH)
-        uses: aquasecurity/trivy-action@master
+        # Pinned to a release tag rather than @master: Dependabot cannot update a
+        # branch ref, so @master would silently never be reviewed. Upstream now
+        # points at release tags in its own README too.
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: localhost/ubi${{ matrix.version }}/ubi:latest
           severity: CRITICAL,HIGH
