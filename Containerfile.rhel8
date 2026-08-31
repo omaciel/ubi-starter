@@ -4,7 +4,7 @@
 # specific rebuilds. Dependabot's docker file-updater chokes on those tag
 # formats when pinning a digest. Tracking :latest@digest sidesteps the bug
 # while still getting CVE-rebuild PRs (digest changes when Red Hat respins).
-FROM registry.access.redhat.com/ubi8/ubi:latest@sha256:f21f2e9672d3b4e5f49b6ed88fb318a8852696f873d685b9b53d0387d1c74907
+FROM registry.access.redhat.com/ubi8/ubi:latest@sha256:eda675df7665e3c37e398b97172b5d4c4336d514da97370052f051d599a09996
 
 ARG USERNAME=flash
 ARG USER_UID=1000
