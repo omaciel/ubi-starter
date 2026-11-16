@@ -1,7 +1,7 @@
 # Use RHEL9 UBI as the base image — pinned by digest for reproducibility.
 # Dependabot opens a PR when a new minor ships or the same minor is rebuilt
 # (e.g. for CVE fixes). See .github/dependabot.yml.
-FROM registry.access.redhat.com/ubi9/ubi:9.8@sha256:1963e00991088221a3405be7eb315a3dbc0be0f1f7440f0bd537d481cf33c83e
+FROM registry.access.redhat.com/ubi9/ubi:9.9@sha256:1e9f0ed9fceafb40878bc1705ff124aa150e3fed873f18c42cdc2dded319e0a8
 
 ARG USERNAME=flash
 ARG USER_UID=1000
